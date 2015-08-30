@@ -1,7 +1,9 @@
 "*******************************Vundle********************************
 set nocompatible "与vi不一致
 filetype off
-"载入特定目录
+"------------------------------------
+"根据不同系统载入相应目录,请按修改修改
+"------------------------------------
 set rtp+=~/.vim/bundle/vundle/			"Linux下
 call vundle#rc()
 "set rtp+=$HOME/_vimfile/bundle/vundle/ 	"Windows下

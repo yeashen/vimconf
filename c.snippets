@@ -52,34 +52,34 @@ snippet once
 ## Control Statements
 # if
 snippet if
-	if (${1:true}) {
+	if(${1:true}){
 		${0}
 	}
 snippet ife
-	if (${1:true}) {
+	if(${1:true}){
 		${2}
-	} else {
+	}else{
 		${0}
 	}
 # else
 snippet el
-	else {
+	else{
 		${0}
 	}
 # else if
 snippet elif
-	else if (${1:true}) {
+	else if(${1:true}){
 		${0}
 	}
 # ifi
 snippet ifi
-	if (${1:true}) ${0};
+	if(${1:true}) ${0};
 # ternary
 snippet t
 	${1:/* condition */} ? ${2:a} : ${3:b}
 # switch
 snippet switch
-	switch (${1:/* variable */}) {
+	switch(${1:/* variable */}){
 		case ${2:/* variable case */}:
 			${3}
 			${4:break;}${5}
@@ -88,7 +88,7 @@ snippet switch
 	}
 # switch without default
 snippet switchndef
-	switch (${1:/* variable */}) {
+	switch(${1:/* variable */}){
 		case ${2:/* variable case */}:
 			${3}
 			${4:break;}${5}
@@ -102,24 +102,24 @@ snippet case
 ## Loops
 # for
 snippet for
-	for (${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
+	for(${2:i} = 0; $2 < ${1:count}; $2${3:++}){
 		${4}
 	}
 # for (custom)
 snippet forr
-	for (${1:i} = ${2:0}; ${3:$1 < 10}; $1${4:++}) {
+	for(${1:i} = ${2:0}; ${3:$1 < 10}; $1${4:++}){
 		${5}
 	}
 # while
 snippet wh
-	while (${1:/* condition */}) {
+	while(${1:/* condition */}){
 		${2}
 	}
 # do... while
 snippet do
-	do {
+	do{
 		${2}
-	} while (${1:/* condition */});
+	}while(${1:/* condition */});
 ##
 ## Functions
 # function definition
@@ -168,7 +168,7 @@ snippet prk
 # getopt
 snippet getopt
 	int choice;
-	while (1)
+	while(1)
 	{
 		static struct option long_options[] =
 		{
@@ -191,10 +191,10 @@ snippet getopt
 		choice = getopt_long( argc, argv, "vh",
 					long_options, &option_index);
 
-		if (choice == -1)
+		if(choice == -1)
 			break;
 
-		switch( choice )
+		switch(choice)
 		{
 			case 'v':
 				${2}
@@ -215,9 +215,9 @@ snippet getopt
 	}
 
 	/* Deal with non-option arguments here */
-	if ( optind < argc )
+	if(optind < argc)
 	{
-		while ( optind < argc )
+		while(optind < argc)
 		{
 			${0}
 		}
