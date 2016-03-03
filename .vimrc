@@ -1,13 +1,9 @@
 "*******************************Vundle********************************
 set nocompatible "与vi不一致
 filetype off
-"------------------------------------
-"根据不同系统载入相应目录,请按修改修改
-"------------------------------------
-set rtp+=~/.vim/bundle/vundle/			"Linux下
+set rtp+=~/.vim/bundle/vundle/ 		"载入特定目录插件
+"set rtp+=$HOME/.vim/bundle/vundle/ 	"Windows下
 call vundle#rc()
-"set rtp+=$HOME/_vimfile/bundle/vundle/ 	"Windows下
-"call vundle#rc('$HOME/_vimfile/bundle/vundle/')
 "-------------------------------plugin--------------------------------
 "vimscripts账号下的项目直接填写名称即可
 Bundle 'Supertab'
@@ -73,8 +69,8 @@ set termencoding=utf-8
 set encoding=utf-8
 "set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
+"colorscheme desert
 colorscheme desert
-"colorscheme darkblue
 
 set cursorline
 "hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
@@ -87,6 +83,7 @@ highlight CursorLine guibg=lightblue guifg=black
 "misc
 "1. open vim without auto open NERDTree
 autocmd vimenter * if !argc() | NERDTree | endif
+nmap xd :%!xxd<cr>
 
 "2. only remain NERDTree auto close it
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -99,7 +96,7 @@ nmap co :copen<CR>
 nmap cp :cclose<CR>
 
 "indent guied
-let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_enable_on_vim_startup = 0
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_guide_size = 1 
 let g:indent_guides_start_level = 2
@@ -158,15 +155,18 @@ nmap <F12> :NERDTreeToggle<cr>:TagbarToggle<cr>
 
 "CTags
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-set tags=/home/juven/work/lichee/linux-3.4/tags
-
+"set tags=/home/xiaoming/sdk/lichee/linux-3.4/tags
+set tags=/home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3/tags
 "CScope
 "build: cscope -Rbq
 set cscopequickfix=s-,c-,d-,i-,t-,e-
-cs add /home/juven/work/lichee/linux-3.4/cscope.out /home/juven/work/lichee/linux-3.4
-nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+"cs add /home/xiaoming/sdk/lichee/linux-3.4/cscope.out /home/xiaoming/sdk/lichee/linux-3.4
+cs add /home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3/cscope.out /home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3
+"nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <F6> :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+"nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <F7> :cs find c <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
@@ -180,16 +180,15 @@ let g:LookupFile_PreserveLastPattern = 0        "不保存上次查找的字符�
 let g:LookupFile_PreservePatternHistory = 1     "保存查找历史
 let g:LookupFile_AlwaysAcceptFirst = 1          "回车打开第一个匹配项目
 let g:LookupFile_AllowNewFiles = 0              "不允许创建不存在的文件
-if filereadable("./filenametags")                "设置tag文件的名字
-	let g:LookupFile_TagExpr = '"./filenametags"'
+if filereadable("/home/xiaoming/zynq/filenametags")                "设置tag文件的名字
+	let g:LookupFile_TagExpr = '"/home/xiaoming/zynq/filenametags"'
 endif
-nmap lk LookupFile		"映射LookupFile为,lk
-nmap ll :LUBufs            "映射LUBufs为,ll
-nmap lw :LUWalk            "映射LUWalk为,lw
+"nmap lk LookupFile		"映射LookupFile为,lk
+"nmap ll :LUBufs            "映射LUBufs为,ll
+"nmap lw :LUWalk            "映射LUWalk为,lw
 
 "complete
-"filetype plugin indent on
-"set completeopt=longest,menu
+set completeopt=longest,menu
 "let g:SuperTabDefaultCompletionType="context"
 
 let OmniCpp_MayCompleteDot = 1 " autocomplete with .
@@ -250,13 +249,14 @@ func SetTitle()
         call append(line(".")+16, "")
     endif
     if &filetype == 'cpp'
-        call append(line(".")+17, "#include<iostream>")
+        call append(line(".")+17, "#include <iostream>")
         call append(line(".")+18, "using namespace std;")
         call append(line(".")+19, "")
     endif
     if &filetype == 'c'
-        call append(line(".")+17, "#include<stdio.h>")
-        call append(line(".")+18, "")
+        call append(line(".")+17, "#include <stdio.h>")
+        call append(line(".")+18, "#include <unistd.h>")
+        call append(line(".")+19, "")
     endif
     "新建文件后，自动定位到文件末尾
     autocmd BufNewFile * normal G

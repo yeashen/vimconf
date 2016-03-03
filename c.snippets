@@ -50,20 +50,40 @@ snippet once
 	#endif /* end of include guard: $1 */
 ##
 ## Control Statements
-# if
-snippet if
+# kernel space if
+snippet ifk
 	if(${1:true}){
 		${0}
 	}
-snippet ife
+snippet ifek
 	if(${1:true}){
 		${2}
 	}else{
 		${0}
 	}
-# else
-snippet el
+#user space if
+snippet ifu
+	if(${1:true})
+	{
+		${0}
+	}
+snippet ifeu
+	if(${1:true})
+	{
+		${2}
+	}else
+	{
+		${0}
+	}
+# kernel space else
+snippet elk
 	else{
+		${0}
+	}
+# user space else
+snippet elu
+	else
+	{
 		${0}
 	}
 # else if
@@ -100,9 +120,15 @@ snippet case
 		${3:break;}
 ##
 ## Loops
-# for
-snippet for
+# kernel sapce for
+snippet fork
 	for(${2:i} = 0; $2 < ${1:count}; $2${3:++}){
+		${4}
+	}
+# user sapce for
+snippet foru
+	for(${2:i} = 0; $2 < ${1:count}; $2${3:++})
+	{
 		${4}
 	}
 # for (custom)
@@ -110,8 +136,13 @@ snippet forr
 	for(${1:i} = ${2:0}; ${3:$1 < 10}; $1${4:++}){
 		${5}
 	}
-# while
-snippet wh
+# kernel space while
+snippet whk
+	while(${1:/* condition */}){
+		${2}
+	}
+# user space while
+snippet whu
 	while(${1:/* condition */}){
 		${2}
 	}
@@ -254,8 +285,7 @@ snippet file
 
 	Copyright (C), 2015-2025, SHARPNOW Co., Ltd.
 
-	*******************************************************************************
-	File Name     : `vim_snippets#Filename('$1', 'name')`
+	*******************************************************************************/
 
 # driver templet
 snippet dri
