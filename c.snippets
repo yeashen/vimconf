@@ -196,6 +196,16 @@ snippet prf
 #debug printk
 snippet prk
 	printk("Func: %s Line: %d ${1}\n", __FUNCTION__, __LINE__, ${2});
+#reg struct define
+snippet reg
+	typedef union{
+		/* define struct bits */
+		struct{
+			unsigned int ${1}:${2};		/* ${3} */
+		}bits;
+		/* define an unsigned member */
+		unsigned int u32;
+	}u_${4};
 # getopt
 snippet getopt
 	int choice;

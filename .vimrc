@@ -1,9 +1,13 @@
 "*******************************Vundle********************************
 set nocompatible "与vi不一致
 filetype off
-set rtp+=~/.vim/bundle/vundle/ 		"载入特定目录插件
-"set rtp+=$HOME/.vim/bundle/vundle/ 	"Windows下
+"------------------------------------
+"根据不同系统载入相应目录,请按修改修改
+"------------------------------------
+set rtp+=~/.vim/bundle/vundle/			"Linux下
 call vundle#rc()
+"set rtp+=$HOME/_vimfile/bundle/vundle/ 	"Windows下
+"call vundle#rc('$HOME/_vimfile/bundle/vundle/')
 "-------------------------------plugin--------------------------------
 "vimscripts账号下的项目直接填写名称即可
 Bundle 'Supertab'
@@ -29,6 +33,9 @@ Bundle 'terryma/vim-multiple-cursors'
 Bundle 'scwbin/csExplorer'
 Bundle 'vim-scripts/lookupfile'
 Bundle 'vim-scripts/genutils'
+Bundle 'vim-scripts/DoxygenToolkit.vim'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'altercation/vim-colors-solarized'
 "非github上资源
 "----------------------------------------------------------------------
 ":BundleList          #已安装列表
@@ -69,8 +76,8 @@ set termencoding=utf-8
 set encoding=utf-8
 "set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
-"colorscheme desert
-colorscheme desert
+set background=dark
+colorscheme solarized
 
 set cursorline
 "hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
@@ -80,13 +87,9 @@ highlight CursorLine guibg=lightblue guifg=black
 "hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 "highlight CursorColumn guibg=lightblue ctermbg=lightgreen guifg=black ctermfg=black
 
-"misc
-"1. open vim without auto open NERDTree
-autocmd vimenter * if !argc() | NERDTree | endif
 nmap xd :%!xxd<cr>
-
-"2. only remain NERDTree auto close it
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+nmap <F6> :w<CR>:make<CR>:cw<CR><CR>
+nmap <F9> :Dox<CR>
 
 "a.vim
 map <C-a> :A<cr>
@@ -104,6 +107,18 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 hi IndentGuidesOdd guibg=red ctermbg=3
 hi IndentGuidesEven guibg=green ctermbg=4
+
+"doxygentoolkit
+let g:DoxygenToolkit_briefTag_pre="@brief: "
+let g:DoxygenToolkit_paramTag_pre="@param: "
+let g:DoxygenToolkit_returnTag="@returns: "
+let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
+let g:DoxygenToolkit_blockFooter="----------------------------------------------------------------------------"
+let g:DoxygenToolkit_authorTag="@autuor: "
+let g:DoxygenToolkit_dateTag="@date: "
+let g:DoxygenToolkit_versionTag="@version: "
+let g:DoxygenToolkit_briefTag_funcName="yes"
+let g:DoxygenToolkit_authorName="Juven"
 
 "indent line
 let g_indentLine_loaded = 1
@@ -129,6 +144,10 @@ let g:EasyMotion_leader_key='<Space>'
 map <F2> :NERDTreeToggle<CR>
 let g:NERDTreeWinPos="right"
 let g:NERDTreeWinSize=25
+"1. open vim without auto open NERDTree
+autocmd vimenter * if !argc() | NERDTree | endif
+"2. only remain NERDTree auto close it
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 "power-line
 set laststatus=2
@@ -155,18 +174,18 @@ nmap <F12> :NERDTreeToggle<cr>:TagbarToggle<cr>
 
 "CTags
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-"set tags=/home/xiaoming/sdk/lichee/linux-3.4/tags
-set tags=/home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3/tags
+"set tags=/home/lxm/Xilinx/zynq/linux-xlnx-xilinx-v2015.3/tags
+"set tags=/home/lxm/Test/rtems/rtems/tags
+set tags=/home/lxm/Xilinx/Workspace/zedboard/minisys/zedboard/zedboard.srcs/sources_1/bd/system/tags
+
 "CScope
 "build: cscope -Rbq
 set cscopequickfix=s-,c-,d-,i-,t-,e-
-"cs add /home/xiaoming/sdk/lichee/linux-3.4/cscope.out /home/xiaoming/sdk/lichee/linux-3.4
-cs add /home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3/cscope.out /home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3
-"nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <F6> :cs find s <C-R>=expand("<cword>")<CR><CR>
+"cs add /home/lxm/Xilinx/zynq/linux-xlnx-xilinx-v2015.3/cscope.out /home/lxm/Xilinx/zynq/linux-xlnx-xilinx-v2015.3
+cs add /home/lxm/Test/rtems/rtems/cscope.out /home/lxm/Test/rtems/rtems/
+nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-"nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <F7> :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
@@ -180,15 +199,19 @@ let g:LookupFile_PreserveLastPattern = 0        "不保存上次查找的字符�
 let g:LookupFile_PreservePatternHistory = 1     "保存查找历史
 let g:LookupFile_AlwaysAcceptFirst = 1          "回车打开第一个匹配项目
 let g:LookupFile_AllowNewFiles = 0              "不允许创建不存在的文件
-if filereadable("/home/xiaoming/zynq/filenametags")                "设置tag文件的名字
-	let g:LookupFile_TagExpr = '"/home/xiaoming/zynq/filenametags"'
+"if filereadable("/home/lxm/Xilinx/zynq/filenametags")                "设置tag文件的名字
+"	let g:LookupFile_TagExpr = '"/home/lxm/Xilinx/zynq/filenametags"'
+"endif
+if filereadable("/home/lxm/Test/rtems/rtems/filenametags")                "设置tag文件的名字
+	let g:LookupFile_TagExpr = '"/home/lxm/Test/rtems/rtems/filenametags"'
 endif
 "nmap lk LookupFile		"映射LookupFile为,lk
 "nmap ll :LUBufs            "映射LUBufs为,ll
 "nmap lw :LUWalk            "映射LUWalk为,lw
 
 "complete
-set completeopt=longest,menu
+"filetype plugin indent on
+"set completeopt=longest,menu
 "let g:SuperTabDefaultCompletionType="context"
 
 let OmniCpp_MayCompleteDot = 1 " autocomplete with .
@@ -215,7 +238,7 @@ let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""新文件标题""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.sh,.java文件，自动插入文件头 
-autocmd BufNewFile *.cpp,*.c,*.sh,*.java exec ":call SetTitle()" 
+autocmd BufNewFile *.cpp,*.c,*.sh,*.java,*.S exec ":call SetTitle()" 
 ""定义函数SetTitle，自动插入文件头 
 func SetTitle() 
     "如果文件类型为.sh文件 
@@ -231,7 +254,7 @@ func SetTitle()
     else 
         call setline(1, "/******************************************************************************")
 		call append(line("."), "")
-		call append(line(".")+1, "	Copyright (C), 20015-2025, SHARPNOW Co., Ltd.")
+		call append(line(".")+1, "	Copyright (C), 2015-2025, SHARPNOW Co., Ltd.")
 		call append(line(".")+2, "")
 		call append(line(".")+3, " ******************************************************************************")
         call append(line(".")+4, "  File Name     : ".expand("%"))
@@ -249,7 +272,7 @@ func SetTitle()
         call append(line(".")+16, "")
     endif
     if &filetype == 'cpp'
-        call append(line(".")+17, "#include <iostream>")
+        call append(line(".")+17, "#include<iostream>")
         call append(line(".")+18, "using namespace std;")
         call append(line(".")+19, "")
     endif
