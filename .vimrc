@@ -26,7 +26,7 @@ Bundle 'Shougo/neocomplete.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'majutsushi/tagbar'
 Bundle 'easymotion/vim-easymotion'
-Bundle 'suan/vim-instant-markdown'
+"Bundle 'suan/vim-instant-markdown'
 Bundle 'honza/vim-snippets'
 Bundle 'vim-scripts/a.vim'
 Bundle 'terryma/vim-multiple-cursors'
@@ -36,6 +36,8 @@ Bundle 'vim-scripts/genutils'
 Bundle 'vim-scripts/DoxygenToolkit.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'iamcco/markdown-preview.vim'
+Bundle 'iamcco/mathjax-support-for-mkdp'
 "非github上资源
 "----------------------------------------------------------------------
 ":BundleList          #已安装列表
@@ -50,7 +52,9 @@ filetype plugin indent on
 "通用
 
 set nu
-set syntax=on
+"set syntax=on
+"for mac
+syntax on
 set ruler
 set foldenable
 set foldmethod=manual
@@ -83,9 +87,10 @@ set cursorline
 "hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 highlight CursorLine guibg=lightblue guifg=black
 
-"set cursorcolumn
+set cursorcolumn
 "hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 "highlight CursorColumn guibg=lightblue ctermbg=lightgreen guifg=black ctermfg=black
+highlight CursorColumn guibg=lightblue guifg=black
 
 nmap xd :%!xxd<cr>
 nmap <F6> :w<CR>:make<CR>:cw<CR><CR>
@@ -97,6 +102,16 @@ map <C-a> :A<cr>
 "quickfix
 nmap co :copen<CR>
 nmap cp :cclose<CR>
+
+"vim-mardown
+"for mac
+let g:mkdp_path_to_chrome = "open -a Safari"
+"for linux
+let g:mkdp_path_to_chrome = "open -a Firefox"
+nmap <silent> <F8> <Plug>MarkdownPreview
+nmap <silent> <F8> <Plug>MarkdownPreview
+nmap <silent> <F7> <Plug>StopMarkdownPreview
+nmap <silent> <F7> <Plug>StopMarkdownPreview
 
 "indent guied
 let g:indent_guides_enable_on_vim_startup = 0
@@ -174,15 +189,12 @@ nmap <F12> :NERDTreeToggle<cr>:TagbarToggle<cr>
 
 "CTags
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-"set tags=/home/lxm/Xilinx/zynq/linux-xlnx-xilinx-v2015.3/tags
-"set tags=/home/lxm/Test/rtems/rtems/tags
-set tags=/home/lxm/Xilinx/Workspace/zedboard/minisys/zedboard/zedboard.srcs/sources_1/bd/system/tags
+"set tags=/yourdir/tags
 
 "CScope
 "build: cscope -Rbq
 set cscopequickfix=s-,c-,d-,i-,t-,e-
-"cs add /home/lxm/Xilinx/zynq/linux-xlnx-xilinx-v2015.3/cscope.out /home/lxm/Xilinx/zynq/linux-xlnx-xilinx-v2015.3
-cs add /home/lxm/Test/rtems/rtems/cscope.out /home/lxm/Test/rtems/rtems/
+"cs add /yourdir/cscope.out /yourdir/
 nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
@@ -296,3 +308,4 @@ func InsertHeadFileMaco()
 	normal! kk
 endfunc
 autocmd BufNewFile *.{h,hpp,H} call InsertHeadFileMaco() 
+
