@@ -1,43 +1,63 @@
 "*******************************Vundle********************************
 set nocompatible "与vi不一致
 filetype off
-"------------------------------------
-"根据不同系统载入相应目录,请按修改修改
-"------------------------------------
-set rtp+=~/.vim/bundle/vundle/			"Linux下
+set rtp+=~/.vim/bundle/vundle/ 		"载入特定目录插件
+"set rtp+=$HOME/.vim/bundle/vundle/ 	"Windows下
 call vundle#rc()
-"set rtp+=$HOME/_vimfile/bundle/vundle/ 	"Windows下
-"call vundle#rc('$HOME/_vimfile/bundle/vundle/')
 "-------------------------------plugin--------------------------------
 "vimscripts账号下的项目直接填写名称即可
+"使Tab快捷键具有更快捷的上下文提示功能
 Bundle 'Supertab'
+
 "其它需填写用户/资源名称
+"使用git来管理插件,更新方便，支持搜索，一键更新，从此只需要一个vimrc走天下
 Bundle 'gmarik/vundle'
-Bundle 'scrooloose/syntastic'	
+"代码语法检查     
+Bundle 'scrooloose/syntastic'
+"一个美观奢华的状态提示栏
 Bundle 'Lokaltog/vim-powerline'
+"快速浏览和操作Buffer
 Bundle 'vim-scripts/minibufexpl.vim'
+"自动显示函数原型
 Bundle 'vim-scripts/echofunc.vim'
+"变量或函数的自动弹出功能
 Bundle 'vim-scripts/OmniCppComplete'
+"代码块及模板快速插入
 Bundle 'SirVer/ultisnips'
+"垂直缩进对齐
 Bundle 'nathanaelkane/vim-indent-guides'
+"画纯文本图
 Bundle 'vim-scripts/DrawIt'
+"缩进对齐线
 Bundle 'Yggdroot/indentLine'
+"自动补全
 Bundle 'Shougo/neocomplete.vim'
+"树形目录
 Bundle 'scrooloose/nerdtree'
+"浏览源文件的标签，如函数，变量，宏
 Bundle 'majutsushi/tagbar'
+"快速跳转
 Bundle 'easymotion/vim-easymotion'
-"Bundle 'suan/vim-instant-markdown'
+"Markdown编辑和实时预览
+Bundle 'suan/vim-instant-markdown'
+"代码模板
 Bundle 'honza/vim-snippets'
+"头文件/源文件快速切换
 Bundle 'vim-scripts/a.vim'
+"多重选取内容
 Bundle 'terryma/vim-multiple-cursors'
+"修改和管理主题
 Bundle 'scwbin/csExplorer'
+"文件查找
 Bundle 'vim-scripts/lookupfile'
+"文件查找
 Bundle 'vim-scripts/genutils'
+"自动文档，生成函数说明等
 Bundle 'vim-scripts/DoxygenToolkit.vim'
+"快速注释
 Bundle 'scrooloose/nerdcommenter'
+"solarized
 Bundle 'altercation/vim-colors-solarized'
-Bundle 'iamcco/markdown-preview.vim'
-Bundle 'iamcco/mathjax-support-for-mkdp'
 "非github上资源
 "----------------------------------------------------------------------
 ":BundleList          #已安装列表
@@ -50,11 +70,9 @@ filetype plugin indent on
 "********************************插件配置******************************
 "
 "通用
-
+" leader = '\'
 set nu
-"set syntax=on
-"for mac
-syntax on
+set syntax=on
 set ruler
 set foldenable
 set foldmethod=manual
@@ -85,33 +103,26 @@ colorscheme solarized
 
 set cursorline
 "hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-highlight CursorLine guibg=lightblue guifg=black
+"highlight CursorLine guibg=ligntblue guifg=black
 
 set cursorcolumn
 "hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 "highlight CursorColumn guibg=lightblue ctermbg=lightgreen guifg=black ctermfg=black
-highlight CursorColumn guibg=lightblue guifg=black
 
+"misc
+"1. open vim without auto open NERDTree
+autocmd vimenter * if !argc() | NERDTree | endif
 nmap xd :%!xxd<cr>
-nmap <F6> :w<CR>:make<CR>:cw<CR><CR>
-nmap <F9> :Dox<CR>
+
+"2. only remain NERDTree auto close it
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 "a.vim
 map <C-a> :A<cr>
 
 "quickfix
-nmap co :copen<CR>
+nmap co :botright copen<CR>
 nmap cp :cclose<CR>
-
-"vim-mardown
-"for mac
-let g:mkdp_path_to_chrome = "open -a Safari"
-"for linux
-let g:mkdp_path_to_chrome = "open -a Firefox"
-nmap <silent> <F8> <Plug>MarkdownPreview
-nmap <silent> <F8> <Plug>MarkdownPreview
-nmap <silent> <F7> <Plug>StopMarkdownPreview
-nmap <silent> <F7> <Plug>StopMarkdownPreview
 
 "indent guied
 let g:indent_guides_enable_on_vim_startup = 0
@@ -134,6 +145,7 @@ let g:DoxygenToolkit_dateTag="@date: "
 let g:DoxygenToolkit_versionTag="@version: "
 let g:DoxygenToolkit_briefTag_funcName="yes"
 let g:DoxygenToolkit_authorName="Juven"
+
 
 "indent line
 let g_indentLine_loaded = 1
@@ -159,10 +171,6 @@ let g:EasyMotion_leader_key='<Space>'
 map <F2> :NERDTreeToggle<CR>
 let g:NERDTreeWinPos="right"
 let g:NERDTreeWinSize=25
-"1. open vim without auto open NERDTree
-autocmd vimenter * if !argc() | NERDTree | endif
-"2. only remain NERDTree auto close it
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 "power-line
 set laststatus=2
@@ -189,20 +197,24 @@ nmap <F12> :NERDTreeToggle<cr>:TagbarToggle<cr>
 
 "CTags
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-"set tags=/yourdir/tags
-
+"set tags=/home/xiaoming/sdk/lichee/linux-3.4/tags
+"set tags=/home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3/tags
+"set tags=/home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx/tags
 "CScope
 "build: cscope -Rbq
 set cscopequickfix=s-,c-,d-,i-,t-,e-
-"cs add /yourdir/cscope.out /yourdir/
-nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR><CR>
-nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+"cs add /home/xiaoming/sdk/lichee/linux-3.4/cscope.out /home/xiaoming/sdk/lichee/linux-3.4
+"cs add /home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3/cscope.out /home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3
+"cs add /home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx/cscope.out /home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx
+
+nmap <leader>ss :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>sg :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>sc :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>st :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>se :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>sf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <leader>si :cs find i ^<C-R>=expand("<cfile>")<CR><CR>
+nmap <leader>sd :cs find d <C-R>=expand("<cword>")<CR><CR>
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 
 " lookupfile
@@ -211,19 +223,18 @@ let g:LookupFile_PreserveLastPattern = 0        "不保存上次查找的字符�
 let g:LookupFile_PreservePatternHistory = 1     "保存查找历史
 let g:LookupFile_AlwaysAcceptFirst = 1          "回车打开第一个匹配项目
 let g:LookupFile_AllowNewFiles = 0              "不允许创建不存在的文件
-"if filereadable("/home/lxm/Xilinx/zynq/filenametags")                "设置tag文件的名字
-"	let g:LookupFile_TagExpr = '"/home/lxm/Xilinx/zynq/filenametags"'
+"if filereadable("/home/xiaoming/zynq/filenametags")                "设置tag文件的名字
+"	let g:LookupFile_TagExpr = '"/home/xiaoming/zynq/filenametags"'
 "endif
-if filereadable("/home/lxm/Test/rtems/rtems/filenametags")                "设置tag文件的名字
-	let g:LookupFile_TagExpr = '"/home/lxm/Test/rtems/rtems/filenametags"'
-endif
+"if filereadable("/home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx/filenametags")                "设置tag文件的名字
+"	let g:LookupFile_TagExpr = '"/home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx/filenametags"'
+"endif
 "nmap lk LookupFile		"映射LookupFile为,lk
 "nmap ll :LUBufs            "映射LUBufs为,ll
 "nmap lw :LUWalk            "映射LUWalk为,lw
 
 "complete
-"filetype plugin indent on
-"set completeopt=longest,menu
+set completeopt=longest,menu
 "let g:SuperTabDefaultCompletionType="context"
 
 let OmniCpp_MayCompleteDot = 1 " autocomplete with .
@@ -247,10 +258,13 @@ let g:UltiSnipsListSnippets = '<C-Tab>'
 let g:UltiSnipsJumpForwardTrigger = '<leader><Tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 
+"nerdcommenter
+let g:NERDSpaceDelims=1
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""新文件标题""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.sh,.java文件，自动插入文件头 
-autocmd BufNewFile *.cpp,*.c,*.sh,*.java,*.S exec ":call SetTitle()" 
+autocmd BufNewFile *.cpp,*.c,*.sh,*.java exec ":call SetTitle()" 
 ""定义函数SetTitle，自动插入文件头 
 func SetTitle() 
     "如果文件类型为.sh文件 
@@ -266,7 +280,7 @@ func SetTitle()
     else 
         call setline(1, "/******************************************************************************")
 		call append(line("."), "")
-		call append(line(".")+1, "	Copyright (C), 2015-2025, SHARPNOW Co., Ltd.")
+		call append(line(".")+1, "	Copyright (C), 20015-2025, SHARPNOW Co., Ltd.")
 		call append(line(".")+2, "")
 		call append(line(".")+3, " ******************************************************************************")
         call append(line(".")+4, "  File Name     : ".expand("%"))
@@ -284,7 +298,7 @@ func SetTitle()
         call append(line(".")+16, "")
     endif
     if &filetype == 'cpp'
-        call append(line(".")+17, "#include<iostream>")
+        call append(line(".")+17, "#include <iostream>")
         call append(line(".")+18, "using namespace std;")
         call append(line(".")+19, "")
     endif
@@ -308,4 +322,3 @@ func InsertHeadFileMaco()
 	normal! kk
 endfunc
 autocmd BufNewFile *.{h,hpp,H} call InsertHeadFileMaco() 
-
