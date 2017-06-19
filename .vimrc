@@ -22,8 +22,8 @@ Bundle 'vim-scripts/minibufexpl.vim'
 Bundle 'vim-scripts/echofunc.vim'
 "变量或函数的自动弹出功能
 Bundle 'vim-scripts/OmniCppComplete'
-"代码块及模板快速插入
-Bundle 'SirVer/ultisnips'
+"代码块及模板快速插入, 会提示python版本错误,所以用vim-snippets代替
+"Bundle 'SirVer/ultisnips'
 "垂直缩进对齐
 Bundle 'nathanaelkane/vim-indent-guides'
 "画纯文本图
