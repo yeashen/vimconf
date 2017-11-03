@@ -58,6 +58,8 @@ Bundle 'vim-scripts/DoxygenToolkit.vim'
 Bundle 'scrooloose/nerdcommenter'
 "solarized
 Bundle 'altercation/vim-colors-solarized'
+"git修改高亮
+Bundle 'airblade/vim-gitgutter'
 "非github上资源
 "----------------------------------------------------------------------
 ":BundleList          #已安装列表
@@ -146,6 +148,9 @@ let g:DoxygenToolkit_versionTag="@version: "
 let g:DoxygenToolkit_briefTag_funcName="yes"
 let g:DoxygenToolkit_authorName="Juven"
 
+"gitgutter
+set updatetime=250
+let g:gitgutter_sign_column_always = 1
 
 "indent line
 let g_indentLine_loaded = 1
