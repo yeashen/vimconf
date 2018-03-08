@@ -54,11 +54,11 @@ Linux下：
 
 在vim命令模式下键入：
 
-	:set tags=/你的tags文件的绝对路径/tags
+	\ct ——　加载当前目录下的tags文件
 
-	:cs add cscope.out
+	\cs ——　加载当前目录下的cscope.out文件
 
-	:let g:LookupFile_TagExpr='"./filenametags"' 
+	\cf ——　加载当前目录下的filenametags文件 
 
 2. 查找打开文件
 ![image](https://github.com/yeashen/vimconf/raw/master/screenshots/2.gif)
