@@ -74,7 +74,10 @@ filetype plugin indent on
 "通用
 " leader = '\'
 set nu
+"对于mac或者其他linux系统，可用需要用第一个配置
+"syntax=on
 set syntax=on
+
 set ruler
 set foldenable
 set foldmethod=manual
@@ -202,15 +205,11 @@ nmap <F12> :NERDTreeToggle<cr>:TagbarToggle<cr>
 
 "CTags
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-"set tags=/home/xiaoming/sdk/lichee/linux-3.4/tags
-"set tags=/home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3/tags
-"set tags=/home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx/tags
+"set tags=tags
 "CScope
 "build: cscope -Rbq
+"cs add cscope.out
 set cscopequickfix=s-,c-,d-,i-,t-,e-
-"cs add /home/xiaoming/sdk/lichee/linux-3.4/cscope.out /home/xiaoming/sdk/lichee/linux-3.4
-"cs add /home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3/cscope.out /home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3
-"cs add /home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx/cscope.out /home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx
 
 nmap <leader>ss :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>sg :cs find g <C-R>=expand("<cword>")<CR><CR>
@@ -228,15 +227,14 @@ let g:LookupFile_PreserveLastPattern = 0        "不保存上次查找的字符�
 let g:LookupFile_PreservePatternHistory = 1     "保存查找历史
 let g:LookupFile_AlwaysAcceptFirst = 1          "回车打开第一个匹配项目
 let g:LookupFile_AllowNewFiles = 0              "不允许创建不存在的文件
-"if filereadable("/home/xiaoming/zynq/filenametags")                "设置tag文件的名字
-"	let g:LookupFile_TagExpr = '"/home/xiaoming/zynq/filenametags"'
-"endif
-"if filereadable("/home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx/filenametags")                "设置tag文件的名字
-"	let g:LookupFile_TagExpr = '"/home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx/filenametags"'
-"endif
+"let g:LookupFile_TagExpr = '"filenametags"'
 "nmap lk LookupFile		"映射LookupFile为,lk
 "nmap ll :LUBufs            "映射LUBufs为,ll
 "nmap lw :LUWalk            "映射LUWalk为,lw
+
+nmap <leader>ct :set tags=tags<CR>
+nmap <leader>cs :cs add cscope.out<CR>
+nmap <leader>cf :let g:LookupFile_TagExpr='"filenametags"'<CR>
 
 "complete
 set completeopt=longest,menu
