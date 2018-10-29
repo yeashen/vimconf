@@ -22,8 +22,8 @@ Bundle 'vim-scripts/minibufexpl.vim'
 Bundle 'vim-scripts/echofunc.vim'
 "变量或函数的自动弹出功能
 Bundle 'vim-scripts/OmniCppComplete'
-"代码块及模板快速插入, 会提示python版本错误,所以用vim-snippets代替
-"Bundle 'SirVer/ultisnips'
+"代码块及模板快速插入
+Bundle 'SirVer/ultisnips'
 "垂直缩进对齐
 Bundle 'nathanaelkane/vim-indent-guides'
 "画纯文本图
@@ -58,7 +58,9 @@ Bundle 'vim-scripts/DoxygenToolkit.vim'
 Bundle 'scrooloose/nerdcommenter'
 "solarized
 Bundle 'altercation/vim-colors-solarized'
-"git修改高亮
+"高亮当前修改git/svn
+"Bundle 'mhinz/vim-signify'
+"高亮修改git
 Bundle 'airblade/vim-gitgutter'
 "非github上资源
 "----------------------------------------------------------------------
@@ -74,10 +76,7 @@ filetype plugin indent on
 "通用
 " leader = '\'
 set nu
-"对于mac或者其他linux系统，可用需要用第一个配置
-"syntax=on
 set syntax=on
-
 set ruler
 set foldenable
 set foldmethod=manual
@@ -101,10 +100,11 @@ set magic
 "set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
-"set fileencodings=ucs-bom,utf-8,cp936
+set fileencodings=utf-8,gbk,latin1
 set fileencoding=utf-8
 set background=dark
-colorscheme solarized
+colorscheme desert
+"colorscheme torte
 
 set cursorline
 "hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
@@ -118,6 +118,7 @@ set cursorcolumn
 "1. open vim without auto open NERDTree
 autocmd vimenter * if !argc() | NERDTree | endif
 nmap xd :%!xxd<cr>
+nmap dy :Dox<cr>
 
 "2. only remain NERDTree auto close it
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -128,6 +129,14 @@ map <C-a> :A<cr>
 "quickfix
 nmap co :botright copen<CR>
 nmap cp :cclose<CR>
+
+"signify
+"let g:signify_vcs_list = [ 'git', 'svn' ]
+"let g:signify_realtime = 0
+
+"gitgutter
+set updatetime=250
+let g:gitgutter_sign_column_always = 1
 
 "indent guied
 let g:indent_guides_enable_on_vim_startup = 0
@@ -151,13 +160,12 @@ let g:DoxygenToolkit_versionTag="@version: "
 let g:DoxygenToolkit_briefTag_funcName="yes"
 let g:DoxygenToolkit_authorName="Juven"
 
-"gitgutter
-set updatetime=250
-let g:gitgutter_sign_column_always = 1
 
 "indent line
 let g_indentLine_loaded = 1
-let g:indentLine_char = '┆'
+" this set only work with file encode by utf-8, so change to 'c'
+"let g:indentLine_char = '┆'
+let g:indentLine_char = 'c'
 let g:indentLine_fileType = ['c', 'cpp', 'h']
 
 "minibufexpl
@@ -205,11 +213,15 @@ nmap <F12> :NERDTreeToggle<cr>:TagbarToggle<cr>
 
 "CTags
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-"set tags=tags
+"set tags=/home/xiaoming/sdk/lichee/linux-3.4/tags
+"set tags=/home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3/tags
+"set tags=/home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx/tags
 "CScope
 "build: cscope -Rbq
-"cs add cscope.out
 set cscopequickfix=s-,c-,d-,i-,t-,e-
+"cs add /home/xiaoming/sdk/lichee/linux-3.4/cscope.out /home/xiaoming/sdk/lichee/linux-3.4
+"cs add /home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3/cscope.out /home/xiaoming/zynq/linux-xlnx-xilinx-v2015.3
+"cs add /home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx/cscope.out /home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx
 
 nmap <leader>ss :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>sg :cs find g <C-R>=expand("<cword>")<CR><CR>
@@ -227,13 +239,18 @@ let g:LookupFile_PreserveLastPattern = 0        "不保存上次查找的字符�
 let g:LookupFile_PreservePatternHistory = 1     "保存查找历史
 let g:LookupFile_AlwaysAcceptFirst = 1          "回车打开第一个匹配项目
 let g:LookupFile_AllowNewFiles = 0              "不允许创建不存在的文件
-"let g:LookupFile_TagExpr = '"filenametags"'
+"if filereadable("/home/xiaoming/zynq/filenametags")                "设置tag文件的名字
+"	let g:LookupFile_TagExpr = '"/home/xiaoming/zynq/filenametags"'
+"endif
+"if filereadable("/home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx/filenametags")                "设置tag文件的名字
+"	let g:LookupFile_TagExpr = '"/home/xiaoming/imx6/android/mykk-savage-1.0/kernel_imx/filenametags"'
+"endif
 "nmap lk LookupFile		"映射LookupFile为,lk
 "nmap ll :LUBufs            "映射LUBufs为,ll
 "nmap lw :LUWalk            "映射LUWalk为,lw
 
 nmap <leader>ct :set tags=tags<CR>
-nmap <leader>cs :cs add cscope.out<CR>
+nmap <leader>cv :cs add cscope.out<CR>
 nmap <leader>cf :let g:LookupFile_TagExpr='"filenametags"'<CR>
 
 "complete
