@@ -62,6 +62,10 @@ Bundle 'altercation/vim-colors-solarized'
 "Bundle 'mhinz/vim-signify'
 "高亮修改git
 Bundle 'airblade/vim-gitgutter'
+"模糊搜索
+Bundle 'kien/ctrlp'
+"grep模式搜索
+Bundle 'EasyGrep'
 "非github上资源
 "----------------------------------------------------------------------
 ":BundleList          #已安装列表
