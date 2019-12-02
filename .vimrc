@@ -1,4 +1,4 @@
-"*******************************Vundle********************************
+
 set nocompatible "与vi不一致
 filetype off
 set rtp+=~/.vim/bundle/vundle/ 		"载入特定目录插件
@@ -18,12 +18,12 @@ Bundle 'scrooloose/syntastic'
 Bundle 'Lokaltog/vim-powerline'
 "快速浏览和操作Buffer
 Bundle 'vim-scripts/minibufexpl.vim'
-"自动显示函数原型
+"自动显示函数
 Bundle 'vim-scripts/echofunc.vim'
 "变量或函数的自动弹出功能
 Bundle 'vim-scripts/OmniCppComplete'
-"代码块及模板快速插入
-Bundle 'SirVer/ultisnips'
+"代码块及模板快速插入, 会提示python版本错误,所以用vim-snippets代替
+"Bundle 'SirVer/ultisnips'
 "垂直缩进对齐
 Bundle 'nathanaelkane/vim-indent-guides'
 "画纯文本图
@@ -39,7 +39,10 @@ Bundle 'majutsushi/tagbar'
 "快速跳转
 Bundle 'easymotion/vim-easymotion'
 "Markdown编辑和实时预览
-Bundle 'suan/vim-instant-markdown'
+"Bundle 'suan/vim-instant-markdown'
+Bundle 'iamcco/markdown-preview.vim'
+"支持数学公式
+Bundle 'iamcco/mathjax-support-for-mkdp'
 "代码模板
 Bundle 'honza/vim-snippets'
 "头文件/源文件快速切换
@@ -62,9 +65,9 @@ Bundle 'altercation/vim-colors-solarized'
 "Bundle 'mhinz/vim-signify'
 "高亮修改git
 Bundle 'airblade/vim-gitgutter'
-"模糊搜索
-Bundle 'kien/ctrlp'
-"grep模式搜索
+" 文件快速查找
+Bundle 'kien/ctrlp.vim'
+" 内容查找
 Bundle 'EasyGrep'
 "非github上资源
 "----------------------------------------------------------------------
@@ -80,7 +83,7 @@ filetype plugin indent on
 "通用
 " leader = '\'
 set nu
-set syntax=on
+syntax on
 set ruler
 set foldenable
 set foldmethod=manual
@@ -101,14 +104,14 @@ set autoread
 set magic
 "set fillchars=vert:\ ,stl:\
 
-"set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
-set fileencodings=utf-8,gbk,latin1
+"set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
 set background=dark
-colorscheme desert
-"colorscheme torte
+"colorscheme solarized
+colorscheme torte
 
 set cursorline
 "hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
@@ -122,7 +125,7 @@ set cursorcolumn
 "1. open vim without auto open NERDTree
 autocmd vimenter * if !argc() | NERDTree | endif
 nmap xd :%!xxd<cr>
-nmap dy :Dox<cr>
+nmap sd :%!xxd -r<cr>
 
 "2. only remain NERDTree auto close it
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -133,10 +136,6 @@ map <C-a> :A<cr>
 "quickfix
 nmap co :botright copen<CR>
 nmap cp :cclose<CR>
-
-"signify
-"let g:signify_vcs_list = [ 'git', 'svn' ]
-"let g:signify_realtime = 0
 
 "gitgutter
 set updatetime=250
@@ -163,13 +162,11 @@ let g:DoxygenToolkit_dateTag="@date: "
 let g:DoxygenToolkit_versionTag="@version: "
 let g:DoxygenToolkit_briefTag_funcName="yes"
 let g:DoxygenToolkit_authorName="Juven"
-
+nmap dy :Dox<CR>
 
 "indent line
 let g_indentLine_loaded = 1
-" this set only work with file encode by utf-8, so change to 'c'
-"let g:indentLine_char = '┆'
-let g:indentLine_char = 'c'
+let g:indentLine_char = '┆'
 let g:indentLine_fileType = ['c', 'cpp', 'h']
 
 "minibufexpl
@@ -284,6 +281,10 @@ let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 
 "nerdcommenter
 let g:NERDSpaceDelims=1
+
+"markdown preview
+nmap <leader>mp :MarkdownPreview<CR>
+nmap <leader>ms :MarkdownPreviewStop<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""新文件标题""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
