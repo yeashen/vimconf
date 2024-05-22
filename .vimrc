@@ -5,8 +5,7 @@ set rtp+=~/.vim/bundle/vundle/ 		"载入特定目录插件
 "set rtp+=$HOME/.vim/bundle/vundle/ 	"Windows下
 call vundle#rc()
 "-------------------------------plugin--------------------------------
-"vimscripts账号下的项目直接填写名称即可
-"使Tab快捷键具有更快捷的上下文提示功能
+"vimscripts账号下的项目直接填写名称即可 "使Tab快捷键具有更快捷的上下文提示功能
 Bundle 'Supertab'
 
 "其它需填写用户/资源名称
@@ -23,7 +22,7 @@ Bundle 'vim-scripts/echofunc.vim'
 "变量或函数的自动弹出功能
 Bundle 'vim-scripts/OmniCppComplete'
 "代码块及模板快速插入
-Bundle 'SirVer/ultisnips'
+"Bundle 'SirVer/ultisnips'
 "垂直缩进对齐
 Bundle 'nathanaelkane/vim-indent-guides'
 "画纯文本图
@@ -62,10 +61,10 @@ Bundle 'altercation/vim-colors-solarized'
 "Bundle 'mhinz/vim-signify'
 "高亮修改git
 Bundle 'airblade/vim-gitgutter'
-"模糊搜索
-Bundle 'kien/ctrlp'
-"grep模式搜索
-Bundle 'EasyGrep'
+"文件搜索
+Bundle 'Yggdroot/LeaderF'
+"vim&tmux切换"
+Bundle 'christoomey/vim-tmux-navigator'
 "非github上资源
 "----------------------------------------------------------------------
 ":BundleList          #已安装列表
@@ -80,7 +79,8 @@ filetype plugin indent on
 "通用
 " leader = '\'
 set nu
-set syntax=on
+"set syntax=on
+syntax on
 set ruler
 set foldenable
 set foldmethod=manual
@@ -104,19 +104,22 @@ set magic
 "set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
-set fileencodings=utf-8,gbk,latin1
+"set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
 set background=dark
-colorscheme desert
-"colorscheme torte
+"colorscheme desert
+colorscheme torte
 
-set cursorline
+"set cursorline
 "hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 "highlight CursorLine guibg=ligntblue guifg=black
 
-set cursorcolumn
+"set cursorcolumn
 "hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 "highlight CursorColumn guibg=lightblue ctermbg=lightgreen guifg=black ctermfg=black
+
+autocmd InsertEnter * set cursorline cursorcolumn
+autocmd InsertLeave * set nocursorline nocursorcolumn
 
 "misc
 "1. open vim without auto open NERDTree
@@ -140,7 +143,8 @@ nmap cp :cclose<CR>
 
 "gitgutter
 set updatetime=250
-let g:gitgutter_sign_column_always = 1
+"let g:gitgutter_sign_column_always = 1
+"set signcolumn=yes
 
 "indent guied
 let g:indent_guides_enable_on_vim_startup = 0
@@ -304,7 +308,7 @@ func SetTitle()
     else 
         call setline(1, "/******************************************************************************")
 		call append(line("."), "")
-		call append(line(".")+1, "	Copyright (C), 20015-2025, SHARPNOW Co., Ltd.")
+		call append(line(".")+1, "	Copyright (C), 2024-2034, Seehi Co., Ltd.")
 		call append(line(".")+2, "")
 		call append(line(".")+3, " ******************************************************************************")
         call append(line(".")+4, "  File Name     : ".expand("%"))
