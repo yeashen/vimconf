@@ -96,7 +96,7 @@ set smartindent
 set ignorecase
 set hlsearch
 set incsearch
-set clipboard+=unnamed
+set clipboard+=unnamedplus
 set autoread
 set magic
 "set fillchars=vert:\ ,stl:\
@@ -350,3 +350,5 @@ func InsertHeadFileMaco()
 	normal! kk
 endfunc
 autocmd BufNewFile *.{h,hpp,H} call InsertHeadFileMaco() 
+vnoremap <C-y> "+y   "支持在Visual模式下，通过C-y复制到系统剪切板
+nnoremap <C-p> "*p   "支持在normal模式下，通过C-p粘贴系统剪切板
