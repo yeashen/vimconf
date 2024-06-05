@@ -85,6 +85,9 @@ set ruler
 set foldenable
 set foldmethod=manual
 set nobackup
+set noswapfile
+set nowritebackup
+set noundofile
 set autoindent
 set cindent
 set tabstop=4
