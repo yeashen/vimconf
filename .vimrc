@@ -101,6 +101,10 @@ set hlsearch
 set incsearch
 set clipboard+=unnamedplus
 set autoread
+"file change, auto reload
+autocmd FocusGained,BufEnter * checktime
+autocmd CursorHold * checktime
+
 set magic
 "set fillchars=vert:\ ,stl:\
 
