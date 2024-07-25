@@ -143,6 +143,8 @@ vim命令模式键入： ColorSchemeExplorer
 
 \si   —— 查找#include这个文件的文件（们）
 
+\g    —— 调用grep在当前目录下查找光标所在的单词
+
 co	打开搜索结果窗口
 
 cp	隐藏搜索结果窗口

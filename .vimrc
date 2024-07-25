@@ -359,3 +359,17 @@ endfunc
 autocmd BufNewFile *.{h,hpp,H} call InsertHeadFileMaco() 
 vnoremap <C-y> "+y   "支持在Visual模式下，通过C-y复制到系统剪切板
 nnoremap <C-p> "*p   "支持在normal模式下，通过C-p粘贴系统剪切板
+
+" 定义一个函数来调用 grep 搜索光标下的当前单词
+function! GrepCurrentWord()
+    " 获取光标下的单词
+    let l:word = expand('<cword>')
+    " 调用 grep 并在当前目录中搜索该单词
+    execute 'grep -rnw . -e ' . l:word
+    " 将结果放入快速修复列表中
+    copen
+endfunction
+
+" 将函数绑定到快捷键
+nnoremap <silent> <leader>g :call GrepCurrentWord()<CR>
+
